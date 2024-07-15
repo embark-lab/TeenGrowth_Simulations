@@ -1,0 +1,143 @@
+---
+title: "TeenGrowth Example"
+format: docx
+editor: visual
+---
+
+```{r, echo=FALSE, message = FALSE, warning = FALSE}
+library(TeenGrowth)
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+
+clean_data = clean_data(demo,
+                        id_col_name = 'participant', 
+                        age_col_name = 'age',
+                        sex_col_name = 'sex',
+                        ht_col_name = 'height',
+                        wt_col_name = 'weight',
+                        adult_ht_col_name = 'adult_height_in', 
+                        ed_aoo_col_name = 'ed_aoo', 
+                        ht_unit = 'in', 
+                        wt_unit = 'lb')
+
+BMI_forecast <- forecast_bmi(
+             data = clean_data, 
+             central_value = "mean",
+             ci = 95)
+
+
+
+```
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE, results = 'hide'}
+bmi_plot_2 <- plot_eBMI(clean_data = clean_data, 
+          forecast_data = BMI_forecast, 
+          px = 2)
+
+weight_plot_2 <-plot_weight(clean_data = clean_data, 
+          forecast_data = BMI_forecast, 
+          px = 2)
+
+forecast_data_2 <- clean_forecast_data(BMI_forecast, 
+                    px = 2, 
+                    model = 'mean')
+
+wt_restore_2 <- demo |> filter(participant == 2)
+wt_restore_clean_2 <-     tx_plot_clean(wt_restore_2,
+                        age_col_name = 'age',
+                        age_unit = 'years',
+                        ht_col_name = 'height',
+                        wt_col_name = 'weight',
+                        adult_ht = wt_restore_2$adult_height_in[1],
+                        ht_unit = 'in', 
+                        wt_unit = 'lb', 
+                        dob = '2009-01-01', 
+                        tx_start_date = '2024-01-01')
+
+  
+wt_restore_forecast_2 <- BMI_forecast |> filter (id == 2)
+
+wt_restore_plot_2 <- Wt_Restore_Plot(wt_restore_clean_2, 
+                wt_restore_forecast_2, 
+                slope_per_week = 0.5)
+
+# save graphs as png files
+ggsave(bmi_plot_2, file = 'Figs/bmi_plot_2.png', height = 8, width = 10)
+ggsave(weight_plot_2, file = 'Figs/weight_plot_2.png', height = 8, width = 10)
+ggsave(wt_restore_plot_2, file= 'Figs/weight_restore_plot_2.png', height = 8, width = 10)
+
+
+bmi_plot_3 <- plot_eBMI(clean_data = clean_data, 
+          forecast_data = BMI_forecast, 
+          px = 3)
+
+weight_plot_3 <-plot_weight(clean_data = clean_data, 
+          forecast_data = BMI_forecast, 
+          px = 3)
+
+forecast_data_3 <- clean_forecast_data(BMI_forecast, 
+                    px = 3, 
+                    model = 'mean')
+
+wt_restore_3 <- demo |> filter(participant == 3)
+wt_restore_clean_3 <-   tx_plot_clean(wt_restore_3,
+                        age_col_name = 'age',
+                        age_unit = 'years',
+                        ht_col_name = 'height',
+                        wt_col_name = 'weight',
+                        adult_ht = wt_restore_3$adult_height_in[1],
+                        ht_unit = 'in', 
+                        wt_unit = 'lb', 
+                        dob = '2009-10-01', 
+                        tx_start_date = '2024-01-01')
+
+  
+wt_restore_forecast_3 <- BMI_forecast |> filter (id == 3)
+
+wt_restore_plot_3 <- Wt_Restore_Plot(wt_restore_clean_3, 
+                wt_restore_forecast_3, 
+                slope_per_week = 0.75)
+# save graphs as png files
+ggsave(bmi_plot_3, file = 'Figs/bmi_plot_3.png', height = 8, width = 10)
+ggsave(weight_plot_3, file = 'Figs/weight_plot_3.png', height = 8, width = 10)
+ggsave(wt_restore_plot_3, file= 'Figs/weight_restore_plot_3.png', height = 8, width = 10)
+
+```
+
+```{r, echo = FALSE, warning = FALSE}
+#| label: fig-biomarker
+#| fig-cap: BMI and Weight Prediction for Two Teens
+#| fig-subcap:
+#|   - "BMI -- Teen 1"
+#|   - "BMI -- Teen 2"
+#|   - "Weight -- Teen 1"
+#|   - "Weight -- Teen 2"
+#|   - "Treatment Plan - Teen 1" 
+#|   - "Treatment Plan -- Teen 2"
+#| layout-ncol: 2
+knitr::include_graphics("Figs/bmi_plot_2.png")
+knitr::include_graphics("Figs/bmi_plot_3.png")
+knitr::include_graphics("Figs/weight_plot_2.png")
+knitr::include_graphics("Figs/weight_plot_3.png")
+knitr::include_graphics("Figs/weight_restore_plot_2.png")
+knitr::include_graphics("Figs/weight_restore_plot_3.png")
+
+
+
+```
+
+```{r, echo = FALSE}
+#| label: tbl-forecast1
+#| tbl-cap: Expected BMI and Weight for Teen 1
+
+knitr::kable(forecast_data_2)
+
+```
+
+```{r, echo = FALSE}
+#| label: tbl-forecast2
+#| tbl-cap: Expected BMI and Weight for Teen 2
+
+knitr::kable(forecast_data_3)
+```
