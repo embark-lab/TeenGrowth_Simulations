@@ -1,5 +1,5 @@
 load("Data/TeenGrowth_SimData_List_Split_Processed.RData")
-
+library(dplyr)
 # Initialize an empty dataframe to store results
 ED_results <- data.frame()
 

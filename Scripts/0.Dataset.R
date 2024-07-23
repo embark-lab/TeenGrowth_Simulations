@@ -9,7 +9,7 @@ n_control <- 1000
 n_ed <- 100
 
 # Age range in months
-age_range_pre14 <- 24:(12 * 14)  # Ages before 14 years
+age_range_pre14 <- 25:(12 * 14)  # Ages before 14 years
 age_range_post14 <- (12 * 14 + 1):240  # Ages after 14 years
 
 # Number of data points

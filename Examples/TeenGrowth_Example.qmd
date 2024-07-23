@@ -10,6 +10,9 @@ library(tidyr)
 library(dplyr)
 library(ggplot2)
 
+demo <- demo
+demo$weight[9:13] <- demo$weight[9:13] + 5
+
 clean_data = clean_data(demo,
                         id_col_name = 'participant', 
                         age_col_name = 'age',
@@ -115,12 +118,13 @@ ggsave(wt_restore_plot_3, file= 'Figs/weight_restore_plot_3.png', height = 8, wi
 #|   - "Weight -- Teen 2"
 #|   - "Treatment Plan - Teen 1" 
 #|   - "Treatment Plan -- Teen 2"
-#| layout-ncol: 2
+#| layout-ncol: 1
 knitr::include_graphics("Figs/bmi_plot_2.png")
-knitr::include_graphics("Figs/bmi_plot_3.png")
 knitr::include_graphics("Figs/weight_plot_2.png")
-knitr::include_graphics("Figs/weight_plot_3.png")
 knitr::include_graphics("Figs/weight_restore_plot_2.png")
+
+knitr::include_graphics("Figs/bmi_plot_3.png")
+knitr::include_graphics("Figs/weight_plot_3.png")
 knitr::include_graphics("Figs/weight_restore_plot_3.png")
 
 
