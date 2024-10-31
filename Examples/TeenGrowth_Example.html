@@ -70,55 +70,451 @@ ul.task-list li input[type="checkbox"] {
 </figure>
 </div>
 </div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="TeenGrowth_Example_files/figure-html/unnamed-chunk-2-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
-<div id="fig-biomarker" class="quarto-layout-panel">
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="TeenGrowth_Example_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="TeenGrowth_Example_files/figure-html/unnamed-chunk-3-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Forecast data after processing:
+# A tibble: 6 × 24
+  agemos adult_height_in median_bmi UW_cutoff_bmi median_wt AN_cutoff_wt sex  
+   &lt;dbl&gt;           &lt;dbl&gt;      &lt;dbl&gt;         &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt; &lt;chr&gt;
+1     25              64       16.4          15.1       NaN          NaN 2    
+2     26              64       16.3          15.1       NaN          NaN 2    
+3     27              64       16.3          15.0       NaN          NaN 2    
+4     28              64       16.2          15.0       NaN          NaN 2    
+5     29              64       16.1          14.9       NaN          NaN 2    
+6     30              64       16.1          14.9       NaN          NaN 2    
+# ℹ 17 more variables: id &lt;dbl&gt;, agemos_adult_ht &lt;dbl&gt;, .model &lt;chr&gt;,
+#   eBMIz &lt;dbl&gt;, lower_eBMIz &lt;dbl&gt;, upper_eBMIz &lt;dbl&gt;, eBMI &lt;dbl&gt;,
+#   lower_eBMI &lt;dbl&gt;, upper_eBMI &lt;dbl&gt;, eWeight &lt;dbl&gt;, lower_eWeight &lt;dbl&gt;,
+#   upper_eWeight &lt;dbl&gt;, ePct &lt;dbl&gt;, lower_ePCT &lt;dbl&gt;, upper_ePCT &lt;dbl&gt;,
+#   date_assessed &lt;date&gt;, age_days &lt;dbl&gt;
+Start BMI: 18.29768 
+Intake BMI percentile: 24.93007 
+Dynamic data after adding bmi and pct:
+# A tibble: 6 × 8
+  date_assessed age_days weight_lbs weight_kgs height_in height_cm   bmi   pct
+  &lt;date&gt;           &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 2021-04-25       4383        105.       47.7        62      157.  19.2  65.6
+2 2024-08-12       5588.       107.       48.4        64      163.  18.3  24.9
+3 2024-08-26       5603.       108.       49.2        64      163.  18.6  29.3
+4 2024-09-21       5629.       107        48.5        64      163.  18.4  25.3
+5 2024-10-09       5647.       108        49.0        64      163.  18.5  27.1
+6 2024-11-07       5676.       110        49.9        64      163.  18.9  32.0
+Start percentile: 24.93007 
+Current percentile: 32.0453 
+Predicted BMI Percentile: 80 th 
+Intake Percentile: 25 th 
+Current Percentile: 32 nd </code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="TeenGrowth_Example_files/figure-html/unnamed-chunk-3-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div id="fig-examplepredict" class="cell quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-biomarker-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="quarto-layout-row">
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-biomarker" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-biomarker-1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div aria-describedby="fig-examplepredict-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div id="fig-examplepredict-1" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-biomarker-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="bmi_plot_2.png" class="img-fluid figure-img" data-ref-parent="fig-biomarker" width="1050">
+<div aria-describedby="fig-examplepredict-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Figs/bmi_plot_2.png" class="img-fluid figure-img" data-ref-parent="fig-examplepredict" width="1500">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-biomarker-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(a) BMI
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-examplepredict-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) BMI – Teen 1
 </figcaption>
 </figure>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-biomarker" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-biomarker-2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div class="cell-output-display">
+<div id="fig-examplepredict-2" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-biomarker-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="weight_plot_2.png" class="img-fluid figure-img" data-ref-parent="fig-biomarker" width="1050">
+<div aria-describedby="fig-examplepredict-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Figs/weight_plot_2.png" class="img-fluid figure-img" data-ref-parent="fig-examplepredict" width="1500">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-biomarker-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(b) Weight
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-examplepredict-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) BMI – Teen 2
 </figcaption>
 </figure>
 </div>
 </div>
-</div>
-<div class="quarto-layout-row">
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-biomarker" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-biomarker-3" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div class="cell-output-display">
+<div id="fig-examplepredict-3" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-biomarker-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="weight_restore_plot_2.png" class="img-fluid figure-img" data-ref-parent="fig-biomarker" width="1050">
+<div aria-describedby="fig-examplepredict-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Figs/weight_restore_plot_2.png" class="img-fluid figure-img" data-ref-parent="fig-examplepredict" width="1500">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-biomarker-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(c) Treatment Planning
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-examplepredict-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c) Weight – Teen 1
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="fig-examplepredict-4" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-examplepredict-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Figs/bmi_plot_3.png" class="img-fluid figure-img" data-ref-parent="fig-examplepredict" width="1500">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-examplepredict-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(d) Weight – Teen 2
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="fig-examplepredict-5" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-examplepredict-5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Figs/weight_plot_3.png" class="img-fluid figure-img" data-ref-parent="fig-examplepredict" width="1500">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-examplepredict-5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(e) Treatment Plan – Teen 1
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="fig-examplepredict-6" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-examplepredict-6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Figs/weight_restore_plot_3.png" class="img-fluid figure-img" data-ref-parent="fig-examplepredict" width="1500">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-examplepredict-6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(f) Treatment Plan – Teen 2
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biomarker-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Biomarker Measurements Before and After Exercise and Rest
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-examplepredict-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: BMI and Weight Prediction for Two Teens
 </figcaption>
 </figure>
+</div>
+</div>
+<div class="cell">
+<div id="tbl-forecast1" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-forecast1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Expected BMI and Weight for Teen 1
+</figcaption>
+<div aria-describedby="tbl-forecast1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Age</th>
+<th style="text-align: left;">Expected BMI</th>
+<th style="text-align: left;">Expected Weight (lbs)</th>
+<th style="text-align: left;">Expected Weight (kgs)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">15.0</td>
+<td style="text-align: left;">18.4 (17.2, 19.7)</td>
+<td style="text-align: left;">120.7 (113.2, 129.9)</td>
+<td style="text-align: left;">54.8 (51.4, 58.9)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">15.5</td>
+<td style="text-align: left;">18.6 (17.5, 20)</td>
+<td style="text-align: left;">122.4 (114.9, 131.7)</td>
+<td style="text-align: left;">55.5 (52.1, 59.7)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">16.0</td>
+<td style="text-align: left;">18.9 (17.7, 20.3)</td>
+<td style="text-align: left;">124 (116.5, 133.4)</td>
+<td style="text-align: left;">56.3 (52.8, 60.5)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">16.5</td>
+<td style="text-align: left;">19.1 (17.9, 20.5)</td>
+<td style="text-align: left;">125.5 (117.9, 134.9)</td>
+<td style="text-align: left;">56.9 (53.5, 61.2)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">17.0</td>
+<td style="text-align: left;">19.3 (18.1, 20.7)</td>
+<td style="text-align: left;">126.9 (119.3, 136.4)</td>
+<td style="text-align: left;">57.6 (54.1, 61.9)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">17.5</td>
+<td style="text-align: left;">19.5 (18.3, 20.9)</td>
+<td style="text-align: left;">128.2 (120.6, 137.7)</td>
+<td style="text-align: left;">58.1 (54.7, 62.4)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">18.0</td>
+<td style="text-align: left;">19.7 (18.5, 21.1)</td>
+<td style="text-align: left;">129.3 (121.6, 138.8)</td>
+<td style="text-align: left;">58.6 (55.2, 63)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">18.5</td>
+<td style="text-align: left;">19.8 (18.6, 21.3)</td>
+<td style="text-align: left;">130.2 (122.5, 139.8)</td>
+<td style="text-align: left;">59.1 (55.6, 63.4)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">19.0</td>
+<td style="text-align: left;">19.9 (18.7, 21.4)</td>
+<td style="text-align: left;">131 (123.2, 140.7)</td>
+<td style="text-align: left;">59.4 (55.9, 63.8)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">19.5</td>
+<td style="text-align: left;">20 (18.8, 21.5)</td>
+<td style="text-align: left;">131.5 (123.6, 141.3)</td>
+<td style="text-align: left;">59.6 (56.1, 64.1)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">20.0</td>
+<td style="text-align: left;">20 (18.8, 21.6)</td>
+<td style="text-align: left;">131.8 (123.8, 141.8)</td>
+<td style="text-align: left;">59.8 (56.2, 64.3)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">20.5</td>
+<td style="text-align: left;">20 (18.8, 21.6)</td>
+<td style="text-align: left;">131.8 (123.8, 141.9)</td>
+<td style="text-align: left;">59.8 (56.2, 64.4)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">21.0</td>
+<td style="text-align: left;">20 (18.8, 21.6)</td>
+<td style="text-align: left;">131.8 (123.8, 141.9)</td>
+<td style="text-align: left;">59.8 (56.2, 64.4)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">21.5</td>
+<td style="text-align: left;">20 (18.8, 21.6)</td>
+<td style="text-align: left;">131.8 (123.8, 141.9)</td>
+<td style="text-align: left;">59.8 (56.2, 64.4)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">22.0</td>
+<td style="text-align: left;">20 (18.8, 21.6)</td>
+<td style="text-align: left;">131.8 (123.8, 141.9)</td>
+<td style="text-align: left;">59.8 (56.2, 64.4)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">22.5</td>
+<td style="text-align: left;">20 (18.8, 21.6)</td>
+<td style="text-align: left;">131.8 (123.8, 141.9)</td>
+<td style="text-align: left;">59.8 (56.2, 64.4)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">23.0</td>
+<td style="text-align: left;">20 (18.8, 21.6)</td>
+<td style="text-align: left;">131.8 (123.8, 141.9)</td>
+<td style="text-align: left;">59.8 (56.2, 64.4)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">23.5</td>
+<td style="text-align: left;">20 (18.8, 21.6)</td>
+<td style="text-align: left;">131.8 (123.8, 141.9)</td>
+<td style="text-align: left;">59.8 (56.2, 64.4)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">24.0</td>
+<td style="text-align: left;">20 (18.8, 21.6)</td>
+<td style="text-align: left;">131.8 (123.8, 141.9)</td>
+<td style="text-align: left;">59.8 (56.2, 64.4)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">24.5</td>
+<td style="text-align: left;">20 (18.8, 21.6)</td>
+<td style="text-align: left;">131.8 (123.8, 141.9)</td>
+<td style="text-align: left;">59.8 (56.2, 64.4)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div class="cell">
+<div id="tbl-forecast2" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-forecast2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: Expected BMI and Weight for Teen 2
+</figcaption>
+<div aria-describedby="tbl-forecast2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Age</th>
+<th style="text-align: left;">Expected BMI</th>
+<th style="text-align: left;">Expected Weight (lbs)</th>
+<th style="text-align: left;">Expected Weight (kgs)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">12.0</td>
+<td style="text-align: left;">20.8 (19.7, 22.2)</td>
+<td style="text-align: left;">NA (NA, NA)</td>
+<td style="text-align: left;">NA (NA, NA)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">12.5</td>
+<td style="text-align: left;">21.2 (20, 22.6)</td>
+<td style="text-align: left;">NA (NA, NA)</td>
+<td style="text-align: left;">NA (NA, NA)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">13.0</td>
+<td style="text-align: left;">21.6 (20.4, 23)</td>
+<td style="text-align: left;">NA (NA, NA)</td>
+<td style="text-align: left;">NA (NA, NA)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">13.5</td>
+<td style="text-align: left;">22 (20.7, 23.4)</td>
+<td style="text-align: left;">NA (NA, NA)</td>
+<td style="text-align: left;">NA (NA, NA)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">14.0</td>
+<td style="text-align: left;">22.3 (21.1, 23.8)</td>
+<td style="text-align: left;">NA (NA, NA)</td>
+<td style="text-align: left;">NA (NA, NA)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">14.5</td>
+<td style="text-align: left;">22.7 (21.4, 24.2)</td>
+<td style="text-align: left;">NA (NA, NA)</td>
+<td style="text-align: left;">NA (NA, NA)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">15.0</td>
+<td style="text-align: left;">23 (21.7, 24.6)</td>
+<td style="text-align: left;">NA (NA, NA)</td>
+<td style="text-align: left;">NA (NA, NA)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">15.5</td>
+<td style="text-align: left;">23.3 (22, 24.9)</td>
+<td style="text-align: left;">135.8 (128.1, 145)</td>
+<td style="text-align: left;">61.6 (58.1, 65.8)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">16.0</td>
+<td style="text-align: left;">23.6 (22.3, 25.2)</td>
+<td style="text-align: left;">137.5 (129.7, 146.8)</td>
+<td style="text-align: left;">62.4 (58.8, 66.6)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">16.5</td>
+<td style="text-align: left;">23.9 (22.5, 25.5)</td>
+<td style="text-align: left;">139 (131.2, 148.5)</td>
+<td style="text-align: left;">63.1 (59.5, 67.4)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">17.0</td>
+<td style="text-align: left;">24.1 (22.8, 25.8)</td>
+<td style="text-align: left;">140.5 (132.6, 150.1)</td>
+<td style="text-align: left;">63.7 (60.1, 68.1)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">17.5</td>
+<td style="text-align: left;">24.3 (23, 26)</td>
+<td style="text-align: left;">141.8 (133.8, 151.6)</td>
+<td style="text-align: left;">64.3 (60.7, 68.8)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">18.0</td>
+<td style="text-align: left;">24.6 (23.2, 26.3)</td>
+<td style="text-align: left;">143.1 (135, 153)</td>
+<td style="text-align: left;">64.9 (61.2, 69.4)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">18.5</td>
+<td style="text-align: left;">24.8 (23.3, 26.5)</td>
+<td style="text-align: left;">144.2 (136, 154.4)</td>
+<td style="text-align: left;">65.4 (61.7, 70)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">19.0</td>
+<td style="text-align: left;">24.9 (23.5, 26.7)</td>
+<td style="text-align: left;">145.3 (136.9, 155.7)</td>
+<td style="text-align: left;">65.9 (62.1, 70.6)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">19.5</td>
+<td style="text-align: left;">25.1 (23.6, 26.9)</td>
+<td style="text-align: left;">146.3 (137.7, 157)</td>
+<td style="text-align: left;">66.4 (62.5, 71.2)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">20.0</td>
+<td style="text-align: left;">25.3 (23.8, 27.2)</td>
+<td style="text-align: left;">147.2 (138.5, 158.2)</td>
+<td style="text-align: left;">66.8 (62.8, 71.8)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">20.5</td>
+<td style="text-align: left;">25.3 (23.8, 27.2)</td>
+<td style="text-align: left;">147.4 (138.6, 158.4)</td>
+<td style="text-align: left;">66.9 (62.8, 71.9)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">21.0</td>
+<td style="text-align: left;">25.3 (23.8, 27.2)</td>
+<td style="text-align: left;">147.4 (138.6, 158.4)</td>
+<td style="text-align: left;">66.9 (62.8, 71.9)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">21.5</td>
+<td style="text-align: left;">25.3 (23.8, 27.2)</td>
+<td style="text-align: left;">147.4 (138.6, 158.4)</td>
+<td style="text-align: left;">66.9 (62.8, 71.9)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<h4 class="anchored">Summary</h4><p><b>Growth Chart Reference Sex:</b> Female</p><p><b>Central BMIz Point:</b> Mean</p><p><b>Prediction Interval:</b> 95%</p><p><b>Eating Disorder Age of Onset:</b> 14.8 years</p><p><b>Adult Height:</b> 68 in / 173 cm</p><p><b>Age at Adult Height:</b> 14.0 years</p><p><b>Most Recent Age with Available Data:</b> 15.2 years</p><p><b>Most Recent Height:</b> 68 in / 172.7 cm</p><p><b>Most Recent Weight:</b> 111.5 lbs / 50.6 kg</p><p><b>Most Recent BMI:</b> 16.9</p><p><b>Most Recent BMI Percentile:</b> 9.7</p><p><b>Expected BMI Percentile:</b> 28.1 (13.3, 48.2)</p><p><b>Expected BMI (+1 Year):</b> 18.9 (17.8, 20.4)</p><p><b>Expected Weight (+1 Year):</b> 124.5 (117, 133.9) lbs / 56.5 (53.1, 60.7) kg</p><p><b>Expected BMI (+5 Years):</b> 20 (18.8, 21.6)</p><p><b>Expected Weight (+5 Years):</b> 131.8 (123.8, 141.9) lbs / 59.8 (56.2, 64.4) kg</p>
+</div>
+<div class="cell-output-display">
+<h4 class="anchored">Summary</h4><p><b>Growth Chart Reference Sex:</b> Female</p><p><b>Central BMIz Point:</b> Mean</p><p><b>Prediction Interval:</b> 95%</p><p><b>Eating Disorder Age of Onset:</b> 11.8 years</p><p><b>Adult Height:</b> 64 in / 163 cm</p><p><b>Age at Adult Height:</b> 15.3 years</p><p><b>Most Recent Age with Available Data:</b> 15.5 years</p><p><b>Most Recent Height:</b> 64 in / 162.6 cm</p><p><b>Most Recent Weight:</b> 109 lbs / 49.4 kg</p><p><b>Most Recent BMI:</b> 18.7</p><p><b>Most Recent BMI Percentile:</b> 29.5</p><p><b>Expected BMI Percentile:</b> 79.8 (70.3, 87.3)</p><p><b>Expected BMI (+1 Year):</b> 23.9 (22.5, 25.5)</p><p><b>Expected Weight (+1 Year):</b> 139 (131.2, 148.5) lbs / 63.1 (59.5, 67.4) kg</p><p><b>Expected BMI (+5 Years):</b> 25.3 (23.8, 27.2)</p><p><b>Expected Weight (+5 Years):</b> 147.4 (138.6, 158.4) lbs / 66.9 (62.8, 71.9) kg</p>
+</div>
 </div>
 
 </main>

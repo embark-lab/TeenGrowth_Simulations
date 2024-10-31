@@ -9,8 +9,9 @@ library(TeenGrowth)
 library(tidyr)
 library(dplyr)
 library(ggplot2)
+library(lubridate)
 
-demo <- demo
+demo <- TeenGrowth::demo
 demo$weight[9:13] <- demo$weight[9:13] + 5
 
 clean_data = clean_data(demo,
@@ -46,18 +47,20 @@ forecast_data_2 <- clean_forecast_data(BMI_forecast,
                     px = 2, 
                     model = 'mean')
 
+
 wt_restore_2 <- demo |> filter(participant == 2)
+
 wt_restore_clean_2 <-     tx_plot_clean(wt_restore_2,
                         age_col_name = 'age',
                         age_unit = 'years',
                         ht_col_name = 'height',
                         wt_col_name = 'weight',
+                        sex = wt_restore_2$sex[1],
                         adult_ht = wt_restore_2$adult_height_in[1],
                         ht_unit = 'in', 
                         wt_unit = 'lb', 
-                        dob = '2009-01-01', 
-                        tx_start_date = '2024-01-01')
-
+                         dob = as.Date(Sys.Date() - lubridate::duration(years = 15.3)),
+                                      tx_start_date = as.Date(Sys.Date())-112)
   
 wt_restore_forecast_2 <- BMI_forecast |> filter (id == 2)
 
@@ -65,11 +68,31 @@ wt_restore_plot_2 <- Wt_Restore_Plot(wt_restore_clean_2,
                 wt_restore_forecast_2, 
                 slope_per_week = 0.5)
 
+pct_restore_clean_2 <- pct_plot_clean(wt_restore_2,
+                                      age_col_name = 'age',
+                                      age_unit = 'years',
+                                      ht_col_name = 'height',
+                                      wt_col_name = 'weight',
+                                      adult_ht = wt_restore_2$adult_height_in[1],
+                                      sex = wt_restore_2$sex[1],
+                                      ht_unit = 'in',
+                                      wt_unit = 'lb',
+                                      dob = lubridate::as_date(Sys.Date() - lubridate::duration(years = 15.3)),
+                                      tx_start_date = lubridate::as_date(Sys.Date())-112)
+
+Pct_restore_plot_2 <- Pct_Restore_Plot(pct_restore_clean_2, wt_restore_forecast_2)
+
+Pct_restore_plot_2 
+
 # save graphs as png files
 ggsave(bmi_plot_2, file = 'Figs/bmi_plot_2.png', height = 8, width = 10)
 ggsave(weight_plot_2, file = 'Figs/weight_plot_2.png', height = 8, width = 10)
 ggsave(wt_restore_plot_2, file= 'Figs/weight_restore_plot_2.png', height = 8, width = 10)
+ggsave(Pct_restore_plot_2, file = 'Figs/pct_restore_plot_2.png', height = 8, width = 10)
 
+```
+
+```{r, echo=FALSE, message = FALSE, warning = FALSE}
 
 bmi_plot_3 <- plot_eBMI(clean_data = clean_data, 
           forecast_data = BMI_forecast, 
@@ -84,64 +107,114 @@ forecast_data_3 <- clean_forecast_data(BMI_forecast,
                     model = 'mean')
 
 wt_restore_3 <- demo |> filter(participant == 3)
+
 wt_restore_clean_3 <-   tx_plot_clean(wt_restore_3,
                         age_col_name = 'age',
                         age_unit = 'years',
                         ht_col_name = 'height',
                         wt_col_name = 'weight',
                         adult_ht = wt_restore_3$adult_height_in[1],
+                        sex = wt_restore_3$sex[1],
                         ht_unit = 'in', 
                         wt_unit = 'lb', 
-                        dob = '2009-10-01', 
-                        tx_start_date = '2024-01-01')
+                dob = as.Date(Sys.Date() - lubridate::duration(years = 15.5)),
+                                      tx_start_date = as.Date(Sys.Date())-90)
 
-  
 wt_restore_forecast_3 <- BMI_forecast |> filter (id == 3)
+
 
 wt_restore_plot_3 <- Wt_Restore_Plot(wt_restore_clean_3, 
                 wt_restore_forecast_3, 
                 slope_per_week = 0.75)
+
+wt_restore_plot_3
+
+pct_restore_clean_3 <-   pct_plot_clean(wt_restore_3,
+                                       age_col_name = 'age',
+                                       age_unit = 'years',
+                                       ht_col_name = 'height',
+                                       wt_col_name = 'weight',
+                                       adult_ht = wt_restore_3$adult_height_in[1],
+                                       sex = wt_restore_3$sex[1],
+                                       ht_unit = 'in',
+                                       wt_unit = 'lb',
+                                       dob = as.Date(Sys.Date() - lubridate::duration(years = 15.5)),
+                                       tx_start_date = as.Date(Sys.Date())-76)
+
+Pct_restore_plot_3 <- Pct_Restore_Plot(pct_restore_clean_3, 
+                wt_restore_forecast_3)
+
+
 # save graphs as png files
 ggsave(bmi_plot_3, file = 'Figs/bmi_plot_3.png', height = 8, width = 10)
 ggsave(weight_plot_3, file = 'Figs/weight_plot_3.png', height = 8, width = 10)
 ggsave(wt_restore_plot_3, file= 'Figs/weight_restore_plot_3.png', height = 8, width = 10)
+ggsave(Pct_restore_plot_3, file = 'Figs/pct_restore_plot_3.png', height = 8, width = 10)
 
 ```
 
 ```{r, echo = FALSE, warning = FALSE}
-#| label: fig-biomarker
+#| label: fig-examplepredict
 #| fig-cap: BMI and Weight Prediction for Two Teens
 #| fig-subcap:
 #|   - "BMI -- Teen 1"
-#|   - "BMI -- Teen 2"
 #|   - "Weight -- Teen 1"
+#|   - "Weight Restoration Plan -- Teen 1" 
+#|   - "BMI Percentile Progress -- Teen 1"
+#|   - "Summary -- Teen 1"
+#|   - "BMI -- Teen 2"
 #|   - "Weight -- Teen 2"
-#|   - "Treatment Plan - Teen 1" 
-#|   - "Treatment Plan -- Teen 2"
+#|   - "Weight Restoration Plan -- Teen 2"
+#|   - "BMI Percentile Progress -- Teen 2"
+#|   - "Summary -- Teen 2"
+
+
+
 #| layout-ncol: 1
 knitr::include_graphics("Figs/bmi_plot_2.png")
 knitr::include_graphics("Figs/weight_plot_2.png")
 knitr::include_graphics("Figs/weight_restore_plot_2.png")
+knitr::include_graphics("Figs/pct_restore_plot_2.png")
+knitr::include_graphics("Figs/summary_table_Teen1.png")
 
 knitr::include_graphics("Figs/bmi_plot_3.png")
 knitr::include_graphics("Figs/weight_plot_3.png")
 knitr::include_graphics("Figs/weight_restore_plot_3.png")
+knitr::include_graphics("Figs/pct_restore_plot_3.png")
+knitr::include_graphics("Figs/summary_table_Teen2.png")
+
 
 
 
 ```
 
-```{r, echo = FALSE}
+```{r, echo=FALSE, message = FALSE, warning = FALSE}
 #| label: tbl-forecast1
 #| tbl-cap: Expected BMI and Weight for Teen 1
 
 knitr::kable(forecast_data_2)
 
+
 ```
 
-```{r, echo = FALSE}
+```{r, echo=FALSE, message = FALSE, warning = FALSE}
 #| label: tbl-forecast2
 #| tbl-cap: Expected BMI and Weight for Teen 2
 
 knitr::kable(forecast_data_3)
+```
+
+```{r}
+# combine forecast_data_3 and forecast_data_2 
+
+forecast_data_2$ID <- "Teen 1"
+forecast_data_3$ID <- "Teen 2"
+
+# combine forecast_data_1 and forecast_data_2
+forecast_data <- rbind(forecast_data_2, forecast_data_3)
+# put ID as the first column
+forecast_data <- forecast_data[, c("ID", setdiff(names(forecast_data), "ID"))]
+
+# save forecast data as .RData file
+save(forecast_data, file = 'Example_Data.RData')
 ```

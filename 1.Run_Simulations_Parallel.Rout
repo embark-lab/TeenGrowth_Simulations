@@ -1,13 +1,11 @@
 
-R version 4.4.0 (2024-04-24) -- "Puppy Cup"
+R version 4.4.1 (2024-06-14) -- "Race for Your Life"
 Copyright (C) 2024 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
-
-  Natural language support but running in an English locale
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
@@ -19,9 +17,9 @@ Type 'q()' to quit R.
 
 > # Load necessary packages
 > install.packages("TeenGrowth", repos = NULL, type = "source")
-Installing package into ‘/home/k/kschaumberg/R_packages’
-(as ‘lib’ is unspecified)
-* installing *source* package ‘TeenGrowth’ ...
+Installing package into '/home/k/kschaumberg/R_packages'
+(as 'lib' is unspecified)
+* installing *source* package 'TeenGrowth' ...
 ** using staged installation
 ** R
 ** data
@@ -51,13 +49,13 @@ In system("timedatectl", intern = TRUE) :
   running command 'timedatectl' had status 1
 > library(dplyr)
 
-Attaching package: ‘dplyr’
+Attaching package: 'dplyr'
 
-The following objects are masked from ‘package:stats’:
+The following objects are masked from 'package:stats':
 
     filter, lag
 
-The following objects are masked from ‘package:base’:
+The following objects are masked from 'package:base':
 
     intersect, setdiff, setequal, union
 
@@ -147,36 +145,26 @@ The following objects are masked from ‘package:base’:
 +   message("Processing split ", i, " of ", length(TeenGrowth_SimData_List_Split))
 +   process_split(TeenGrowth_SimData_List_Split[[i]], i)
 + }, mc.cores = num_cores)
-Processing split 1 of 30
-Processing split 2 of 30
-Processing split 3 of 30
-Processing split 4 of 30
-Processing split 5 of 30
-Processing split 6 of 30
-Processing split 7 of 30
-Processing split 8 of 30
-Processing split 9 of 30
-Processing split 10 of 30
-Processing split 11 of 30
-Processing split 12 of 30
-Processing split 13 of 30
-Processing split 14 of 30
-Processing split 15 of 30
-Processing split 16 of 30
-Processing split 17 of 30
-Processing split 18 of 30
-Processing split 19 of 30
-Processing split 20 of 30
-Processing split 24 of 30
-Processing split 29 of 30
-Processing split 30 of 30
-Processing split 23 of 30
-Processing split 22 of 30
-Processing split 21 of 30
-Processing split 25 of 30
-Processing split 26 of 30
-Processing split 27 of 30
-Processing split 28 of 30
+Processing split 1 of 20
+Processing split 2 of 20
+Processing split 3 of 20
+Processing split 4 of 20
+Processing split 5 of 20
+Processing split 6 of 20
+Processing split 7 of 20
+Processing split 8 of 20
+Processing split 9 of 20
+Processing split 10 of 20
+Processing split 11 of 20
+Processing split 12 of 20
+Processing split 13 of 20
+Processing split 14 of 20
+Processing split 15 of 20
+Processing split 17 of 20
+Processing split 16 of 20
+Processing split 18 of 20
+Processing split 20 of 20
+Processing split 19 of 20
 > 
 > # Replace the original list with the processed splits
 > TeenGrowth_SimData_List_Split <- processed_splits
@@ -188,4 +176,4 @@ All splits processed and data saved.
 > 
 > proc.time()
       user     system    elapsed 
-173930.155    124.859  11945.319 
+120262.380     96.756  12516.242 

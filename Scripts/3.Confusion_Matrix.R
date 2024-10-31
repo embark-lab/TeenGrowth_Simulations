@@ -1,7 +1,11 @@
 load("Data/TeenGrowth_SimData_List_Split_Processed.RData")
 library(dplyr)
+library(tidyr)
+library(stringr)
+
 # Initialize an empty dataframe to store results
 ED_results <- data.frame()
+
 
 # Loop through each simulation
 for (sim_index in seq_along(TeenGrowth_SimData_List_Split)) {
@@ -20,15 +24,14 @@ for (sim_index in seq_along(TeenGrowth_SimData_List_Split)) {
     ED_results <- rbind(ED_results, forecast_merge) 
     
   }
-  }
+}
 
 ED_results <- ED_results %>%
   filter(!is.na(eBMIz)) |> 
   mutate(bmiz_above_lower = ifelse(bmiz >= lower_eBMIz, 1, 0)) |> 
   select(id, forecast, simulation_type, bmiz_above_lower)
 
-library(tidyr)
-library(stringr)
+
 # Split the simulation colum into avg datapoints, rho, and sd
 ED_results <- ED_results %>%
   mutate(
@@ -50,8 +53,8 @@ ED_results <- ED_results %>%
 # recode rho 
 ED_results <- ED_results |> 
   mutate(rho = case_when (
-    rho == '0.926484872479069' ~ '0.4',
-    rho == '0.981576529873752' ~ '0.8'
+    rho == '0.970714469623222' ~ '0.7',
+    rho == '0.991258389045303' ~ '0.9'
   ))
 
 
@@ -74,6 +77,12 @@ combinations <- expand.grid(
   forecast_point = forecast_point_values
 )
 
+# remove rows where forecast_point == pop_median and ci !is.na
+combinations <- combinations |> 
+  filter(!(forecast_point == 'pop_median' & !is.na(ci))) |> 
+  filter(!(forecast_point != 'pop_median' & is.na(ci)))
+
+
 # Initialize list to store confusion matrices and vectors for performance metrics
 confusion_matrices_list <- list()
 sensitivity_values <- numeric(nrow(combinations))
@@ -81,6 +90,8 @@ specificity_values <- numeric(nrow(combinations))
 accuracy_values <- numeric(nrow(combinations))
 ppv_values <- numeric(nrow(combinations))
 npv_values <- numeric(nrow(combinations))
+
+combinations$ci <- as.character(combinations$ci)
 
 # Iterate over all combinations
 for (i in 1:nrow(combinations)) {
@@ -92,7 +103,7 @@ for (i in 1:nrow(combinations)) {
     filter(rho == params$rho,
            sd == params$sd,
            n_datapoints == params$n_datapoints,
-           ci == params$ci,
+           (ci == params$ci | (is.na(ci) & is.na(params$ci))),
            forecast_point == params$forecast_point) %>%
     mutate(group = recode(group, 'Control' = 1, 'ED' = 0))
   
@@ -111,7 +122,8 @@ for (i in 1:nrow(combinations)) {
   specificity_values[i] <- confusion_matrix$byClass[2]
   ppv_values[i] <- confusion_matrix$byClass[3]
   npv_values[i] <- confusion_matrix$byClass[4]
-  accuracy_values[i] <- confusion_matrix$overall[1]
+  accuracy_values[i] <- confusion_matrix$byClass[11]
+  
 }
 
 # Combine results into a data frame
@@ -158,9 +170,11 @@ confusion <- confusion |>
     forecast_point == 'max' ~ 'Max',
     forecast_point == 'mean' ~ 'Mean',
     forecast_point == 'mean+most_recent' ~ 'Mean + Most Recent',
-    forecast_point == 'most_recent' ~ 'Most Recent'
+    forecast_point == 'most_recent' ~ 'Most Recent',
+    forecast_point == 'pop_median' ~ 'Population Median'
   ))
 
+
 # Save confusion matrix dataframe
-save(confusion, file = "Data/ED_confusion_matrix.RData")
+save(confusion, file = "Tabs/ED_confusion_matrix.RData")
 

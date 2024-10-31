@@ -77,6 +77,9 @@ for (i in seq_along(TeenGrowth_SimData_List_Split)) {
         # Remove the forecast data with agemos <= 60
         forecast <- forecast %>% filter(agemos > 60)
         
+        # Remove rows with NA values in eBMIz
+        forecast <- forecast %>% filter(!is.na(eBMIz))
+        
         # Create a unique key for the forecast
         condition_key <- if (!is.null(condition$ci)) {
           paste0(central_value, "_ci_", condition$ci)
@@ -96,7 +99,10 @@ for (i in seq_along(TeenGrowth_SimData_List_Split)) {
   # Save all forecasts for this split in the original list
   TeenGrowth_SimData_List_Split[[i]]$forecasts <- forecasts
   message("  Completed processing split ", i)
+  
 }
+
+
 
 # Save the processed data
  save(TeenGrowth_SimData_List_Split, file = "Data/TeenGrowth_SimData_List_Split_Processed.RData")

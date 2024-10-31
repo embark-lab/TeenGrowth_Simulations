@@ -1,5 +1,6 @@
 library(dplyr)
 library(tidyr)
+library(sn)
 
 # Set seed for reproducibility
 set.seed(674)
@@ -15,14 +16,14 @@ age_range_post14 <- (12 * 14 + 1):240  # Ages after 14 years
 # Number of data points
 n_datapoints_list <- c(3, 6, 9, 12, 15)
 
-# Annual autocorrelation parameters
-rho_annual_list <- c(0.4, 0.8)
+# Annual autocorrelation parameters (Freedman et al. estimates) 
+rho_annual_list <- c(0.7, 0.9)
 
 # Convert annual autocorrelation to monthly autocorrelation
 rho_monthly_list <- rho_annual_list^(1/12)
 
-# Within-child standard deviations
-within_child_sd_list <- c(0.2, 0.4, 0.6)
+# Within-child standard deviations (Freedman et al. estimates)
+within_child_sd_list <- c(0.2, 0.4)
 
 
 # Generate sex vector with half male for control group and 20% male for ED group
@@ -31,7 +32,7 @@ sex_ed <- rep(c("M", "F"), times = c(n_ed * 0.2, n_ed * 0.8))
 sex_vector <- c(sex_control, sex_ed)
 
 # Function to simulate data for one child with autocorrelation
-simulate_child_data <- function(child_id, n_datapoints, rho, within_child_sd, sex, group, drop_after_14 = FALSE, drop_mean = 1, drop_sd = 0.5) {
+simulate_child_data <- function(child_id, n_datapoints, rho, within_child_sd, sex, group, drop_after_14 = FALSE, drop_mean = 0, drop_sd = 0) {
   # Determine number of data points before and after age 14
   n_datapoints_pre14 <- ceiling(2/3 * n_datapoints)
   n_datapoints_post14 <- n_datapoints - n_datapoints_pre14
@@ -48,24 +49,36 @@ simulate_child_data <- function(child_id, n_datapoints, rho, within_child_sd, se
     ages <- c(ages_pre14, ages_post14)
   }
   
-  # BMIz-scores (mean = 0, sd between children = 1)
-  child_mean <- rnorm(1, mean = 0, sd = 1)
+  # BMIz-scores -- based off of ABCD Data (https://doi.org/10.3389/fped.2021.734184) 
+  mean_bmiz <- 0  # Mean of the distribution 
+  sd_bmiz <- 1  # Standard deviation of the distribution
+  skewness <- 0.5  # Positive skew value 
+  
+  # Simulate skewed distribution
+  child_mean <- rsn(1, xi = mean_bmiz, omega = sd_bmiz, alpha = skewness)
+  
+  # random normal
+ # child_mean <- rnorm(1, mean = 0, sd = 1)
   
   # Initialize the BMIz-scores vector
   bmi_zscores <- numeric(n_datapoints)
   bmi_zscores[1] <- rnorm(1, mean = child_mean, sd = within_child_sd)
   
-  # Generate BMIz-scores with autocorrelation considering time difference
-  if(n_datapoints > 1) {
+  # Generate BMI z-scores with autocorrelation and incorporate child_mean consider time difference to add autocorrelation
+  if (n_datapoints > 1) {
     for (i in 2:n_datapoints) {
       time_diff <- (ages[i] - ages[i - 1])  # Time difference in months
       rho_adjusted <- rho^time_diff
-      bmi_zscores[i] <- rho_adjusted * bmi_zscores[i - 1] + rnorm(1, mean = 0, sd = sqrt(1 - rho_adjusted^2) * within_child_sd)
+      error_sd <- sqrt((1 - rho_adjusted^2)) * within_child_sd
+      
+      # Adjusted AR(1) equation with child_mean
+      bmi_zscores[i] <- child_mean + rho_adjusted * (bmi_zscores[i - 1] - child_mean) +
+        rnorm(1, mean = 0, sd = error_sd)
     }
   }
   
   # Apply drop in BMIz score after age 14 if specified
-  if (drop_after_14) {
+  if (drop_after_14 == TRUE) {
     for (i in seq_along(ages)) {
       if (ages[i] > 12 * 14) {
         bmi_zscores[i] <- bmi_zscores[i] - rnorm(1, mean = drop_mean, sd = drop_sd)
@@ -169,13 +182,38 @@ split_data <- function(data, split_age) {
   list(training_data = training_data, testing_data = testing_data)
 }
 
+
+
 # Split data
 TeenGrowth_SimData_List_Split <- list()
 for (sim_name in names(TeenGrowth_SimData_List_Clean)) {
   split_result <- split_data(TeenGrowth_SimData_List_Clean[[sim_name]], split_age = 14)
   TeenGrowth_SimData_List_Split[[sim_name]] <- split_result
+  
+  training_data_summary <- TeenGrowth_SimData_List_Split[[sim_name]]$training_data %>% summarize(
+    min_age = min(agemos),
+    max_age = max(agemos),
+    min_bmiz = min(bmiz),
+    max_bmiz = max(bmiz),
+    mean_bmiz = mean(bmiz),
+    sd_bmiz = sd(bmiz)
+  )
+  
+  print(training_data_summary)
+  
+  testing_data_summary <- TeenGrowth_SimData_List_Split[[sim_name]]$testing_data %>% summarize(
+    min_age = min(agemos),
+    max_age = max(agemos),
+    min_bmiz = min(bmiz),
+    max_bmiz = max(bmiz),
+    mean_bmiz = mean(bmiz),
+    sd_bmiz = sd(bmiz)
+  )
+  print(testing_data_summary)
+  
 }
 
 # Save combined data to an RData file
 save(TeenGrowth_SimData_List_Clean, file = "Data/TeenGrowth_SimData_List_Clean.RData")
 save(TeenGrowth_SimData_List_Split, file = "Data/TeenGrowth_SimData_List_Split.RData")
+

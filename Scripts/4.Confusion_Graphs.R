@@ -2,24 +2,30 @@
 library(reshape2)
 library(ggplot2)
 library(dplyr)
+
 # load confusion matrix
-load('Data/ED_confusion_matrix.RData')
+load('Tabs/ED_confusion_matrix.RData')
+
+# if prediction interval is NA change to '85% of 50th percentile'
+
+confusion <- confusion %>%
+  mutate(prediction_interval = ifelse(is.na(prediction_interval), '85% of 50th', prediction_interval))
 
 # Check for NA values in ci and sd
 confusion <- confusion %>%
   filter(!is.na(prediction_interval) & !is.na(sd))
 
 # Melt the confusion data frame for visualization
-confusion_melted <- melt(confusion, id.vars = c("rho", "sd", "n_datapoints", "prediction_interval", "forecast_point"))
+confusion_melted <- reshape2::melt(confusion, id.vars = c("rho", "sd", "n_datapoints", "prediction_interval", "forecast_point"))
 
 # Order data by n_datapoints
 confusion_melted <- confusion_melted %>%
   arrange(n_datapoints)
 
 # order prediction_interval as a factor to be 95, 99, +/- 0.5 SD
-confusion_melted$prediction_interval <- factor(confusion_melted$prediction_interval, levels = c('95', '99', '+/- 0.5 BMIz'))
+confusion_melted$prediction_interval <- factor(confusion_melted$prediction_interval, levels = c('95', '99', '+/- 0.5 BMIz', '85% of 50th'))
 # Change autocorrelation factor levels
-confusion_melted$rho <- factor(confusion_melted$rho, levels = c('0.8', '0.4'))
+confusion_melted$rho <- factor(confusion_melted$rho, levels = c('0.9', '0.7'))
 
 library(ggplot2)
 library(gtable)
@@ -27,16 +33,15 @@ library(grid)
 
 # Add a 'shaded' column to the dataset
 confusion_melted <- confusion_melted %>%
-  mutate(shaded = ifelse(sd %in% c(0.2, 0.6), "shaded", "not_shaded"))
+  mutate(shaded = ifelse(sd %in% c(0.2, 0.4), "shaded", "not_shaded"))
 
 # Define the background color for shading
 shaded_fill <- "#F5F5DC"
-library(dplyr)
-library(ggplot2)
+
 
 # Add a 'shaded' column to the dataset
 confusion_melted <- confusion_melted %>%
-  mutate(shaded = ifelse(sd %in% c(0.2, 0.6), "shaded", "not_shaded"))
+  mutate(shaded = ifelse(sd %in% c(0.2, 0.4), "shaded", "not_shaded"))
 
 # Define the background color for shading
 shaded_fill <- "#F5F5DC"
@@ -56,8 +61,8 @@ confusion_melted <- confusion_melted |>
   ) )
   
   
-# recode sd to be 'sd = 0.2', 'sd = 0.4', and  'sd = 0.6'
-confusion_melted$sd <- factor(confusion_melted$sd, levels = c(0.2, 0.4, 0.6), labels = c('sd = 0.2', 'sd = 0.4', 'sd = 0.6'))
+# recode sd to be 
+confusion_melted$sd <- factor(confusion_melted$sd, levels = c(0.2, 0.4), labels = c('sd = 0.2', 'sd = 0.4'))
 
 # Create the plot with shading
 p <- ggplot(confusion_melted %>% filter(variable == 'accuracy'), 
@@ -69,14 +74,15 @@ p <- ggplot(confusion_melted %>% filter(variable == 'accuracy'),
   geom_line(size = 1) +
   geom_point(size = 2) +
   facet_grid(prediction_interval ~ sd) +
-  labs(title = "Overall Accuracy Across Simulations", x = "N Datapoints (Training)", 
+  labs(title = "Balanced Accuracy Across Simulations", x = "N Datapoints (Training)", 
        y = "Accuracy", color = "Forecast Point", linetype = "Autocorrelation") +
   embarktools::embark_theme_a + 
   theme(legend.position = "right") +
   scale_color_manual(values = c("Max" = "#1A4F66", 
                                 "Mean" = "#EF6C45", 
                                 "Mean + Most Recent" = "#C2B824", 
-                                "Most Recent" = "#A481C7")) +
+                                "Most Recent" = "#A481C7", 
+                                "Population Median" = "#E1AD01")) +
   scale_x_continuous(breaks = seq(2, 10, 2)) +
   theme(strip.text = element_text(size = 12, color = '#EEECE1', face = "bold")) + 
   theme(strip.background = element_rect(fill = strip_fill_light, color = "#F0F0F0")) + 
@@ -123,7 +129,8 @@ plot_confusion_metrics <- function(data, dv) {
     scale_color_manual(values = c("Max" = "#1A4F66", 
                                   "Mean" = "#EF6C45", 
                                   "Mean + Most Recent" = "#C2B824", 
-                                  "Most Recent" = "#A481C7")) +
+                                  "Most Recent" = "#A481C7", 
+                                  "Population Median" = "#E1AD01")) +
     scale_x_continuous(breaks = seq(2, 10, 2)) +
     theme(strip.text = element_text(size = 12, color = '#EEECE1', face = "bold")) + 
     theme(strip.background = element_rect(fill = strip_fill_light, color = "#F0F0F0")) + 
@@ -175,7 +182,7 @@ final_plot <- cowplot::plot_grid(
 print(final_plot)
 
 # Save the final plot
-ggsave("Figs/Combined_Confusion_Metrics.png", final_plot, width = 12, height = 12, dpi = 300)
+ggsave("Figs/Combined_Confusion_Metrics.png", final_plot, width = 14, height = 12, dpi = 300)
 
 
 
