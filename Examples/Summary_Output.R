@@ -6,7 +6,9 @@ library(lubridate)
 
 
 demo <- TeenGrowth::demo
-demo$weight[9:13] <- demo$weight[9:13] + 5
+demo$weight[9:12] <- demo$weight[9:12] + 5
+demo$weight[13] <- demo$weight[13] + 3
+
 
 demo_2 <- demo |> 
   filter(participant == 2)
@@ -95,7 +97,7 @@ summary_df <- data.frame(
                 "Expected BMI (+1 Year)", "Expected Weight (+1 Year)",
                 "Expected BMI (+5 Years)", "Expected Weight (+5 Years)"),
   Value = c(
-    ifelse(demo_2$sex[1] == 2, 'Female', "Male"),
+    ifelse(demo_2$sex[1] == "F", 'Female', "Male"),
     "Mean",
     "95%",
     ifelse(!is.na(ed_aoo), sprintf("%.1f years", ed_aoo / 12), "Not Provided"),
@@ -124,7 +126,7 @@ summary_table <- autofit(summary_table)
 summary_table
 
 # Save the flextable
-save_as_image(summary_table, path = "Figs/summary_table_Teen1.png")
+save_as_image(summary_table, path = "Figs/summary_table_Teen2.png")
 
 demo_3 <- demo |> 
   filter(participant == 3)
@@ -213,7 +215,7 @@ summary_df <- data.frame(
                 "Expected BMI (+1 Year)", "Expected Weight (+1 Year)",
                 "Expected BMI (+5 Years)", "Expected Weight (+5 Years)"),
   Value = c(
-    ifelse(demo_3$sex[1] == 2, 'Female', "Male"),
+    ifelse(demo_3$sex[1] == "F", 'Female', "Male"),
     "Mean",
     "95%",
     ifelse(!is.na(ed_aoo), sprintf("%.1f years", ed_aoo / 12), "Not Provided"),
@@ -243,4 +245,4 @@ summary_table <- autofit(summary_table)
 summary_table
 
 # Save the flextable
-save_as_image(summary_table, path = "Figs/summary_table_Teen2.png")
+save_as_image(summary_table, path = "Figs/summary_table_Teen1.png")

@@ -12,7 +12,8 @@ library(ggplot2)
 library(lubridate)
 
 demo <- TeenGrowth::demo
-demo$weight[9:13] <- demo$weight[9:13] + 5
+demo$weight[9:12] <- demo$weight[9:12] + 5
+demo$weight[13] <- demo$weight[13] + 3
 
 clean_data = clean_data(demo,
                         id_col_name = 'participant', 
@@ -35,6 +36,7 @@ BMI_forecast <- forecast_bmi(
 ```
 
 ```{r, warning=FALSE, message=FALSE, echo=FALSE, results = 'hide'}
+
 bmi_plot_2 <- plot_eBMI(clean_data = clean_data, 
           forecast_data = BMI_forecast, 
           px = 2)
@@ -66,7 +68,7 @@ wt_restore_forecast_2 <- BMI_forecast |> filter (id == 2)
 
 wt_restore_plot_2 <- Wt_Restore_Plot(wt_restore_clean_2, 
                 wt_restore_forecast_2, 
-                slope_per_week = 0.5)
+                slope_per_week = 0.75)
 
 pct_restore_clean_2 <- pct_plot_clean(wt_restore_2,
                                       age_col_name = 'age',
@@ -85,15 +87,15 @@ Pct_restore_plot_2 <- Pct_Restore_Plot(pct_restore_clean_2, wt_restore_forecast_
 Pct_restore_plot_2 
 
 # save graphs as png files
-ggsave(bmi_plot_2, file = 'Figs/bmi_plot_2.png', height = 8, width = 10)
-ggsave(weight_plot_2, file = 'Figs/weight_plot_2.png', height = 8, width = 10)
-ggsave(wt_restore_plot_2, file= 'Figs/weight_restore_plot_2.png', height = 8, width = 10)
-ggsave(Pct_restore_plot_2, file = 'Figs/pct_restore_plot_2.png', height = 8, width = 10)
+ggsave(bmi_plot_2, file = 'Figs/bmi_plot_2.png', height = 8, width = 10, scale = 0.8)
+ggsave(weight_plot_2, file = 'Figs/weight_plot_2.png', height = 8, width = 10, scale = 1)
+ggsave(wt_restore_plot_2, file= 'Figs/weight_restore_plot_2.png', height = 8, width = 10, scale = .8)
+ggsave(Pct_restore_plot_2, file = 'Figs/pct_restore_plot_2.png', height = 8, width = 10, dpi=300, scale = 0.7)
 
 ```
 
 ```{r, echo=FALSE, message = FALSE, warning = FALSE}
-
+setwd("/Volumes/kschaumberg/TeenGrowth_Simulations")
 bmi_plot_3 <- plot_eBMI(clean_data = clean_data, 
           forecast_data = BMI_forecast, 
           px = 3)
@@ -146,10 +148,10 @@ Pct_restore_plot_3 <- Pct_Restore_Plot(pct_restore_clean_3,
 
 
 # save graphs as png files
-ggsave(bmi_plot_3, file = 'Figs/bmi_plot_3.png', height = 8, width = 10)
-ggsave(weight_plot_3, file = 'Figs/weight_plot_3.png', height = 8, width = 10)
-ggsave(wt_restore_plot_3, file= 'Figs/weight_restore_plot_3.png', height = 8, width = 10)
-ggsave(Pct_restore_plot_3, file = 'Figs/pct_restore_plot_3.png', height = 8, width = 10)
+ggsave(bmi_plot_3, file = 'Figs/bmi_plot_1.png', height = 8, width = 10)
+ggsave(weight_plot_3, file = 'Figs/weight_plot_1.png', height = 8, width = 10)
+ggsave(wt_restore_plot_3, file= 'Figs/weight_restore_plot_1.png', height = 8, width = 10, scale = 0.8)
+ggsave(Pct_restore_plot_3, file = 'Figs/pct_restore_plot_1.png', height = 8, width = 10, dpi=300, scale = 0.7)
 
 ```
 
@@ -206,9 +208,8 @@ knitr::kable(forecast_data_3)
 
 ```{r}
 # combine forecast_data_3 and forecast_data_2 
-
-forecast_data_2$ID <- "Teen 1"
-forecast_data_3$ID <- "Teen 2"
+forecast_data_2$ID <- "Teen 2"
+forecast_data_3$ID <- "Teen 1"
 
 # combine forecast_data_1 and forecast_data_2
 forecast_data <- rbind(forecast_data_2, forecast_data_3)
@@ -216,5 +217,5 @@ forecast_data <- rbind(forecast_data_2, forecast_data_3)
 forecast_data <- forecast_data[, c("ID", setdiff(names(forecast_data), "ID"))]
 
 # save forecast data as .RData file
-save(forecast_data, file = 'Example_Data.RData')
+save(forecast_data, file = 'Tabs/Example_Data.RData')
 ```
